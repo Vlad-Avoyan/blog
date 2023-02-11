@@ -45,7 +45,9 @@ class PostController extends Controller
             'content' => 'string',
             'image' => 'string',
         ]);
-        dd($data);
+        $post->update($data);
+        return redirect()->route('post.show', $post->id);
+
     }
 
     public function delete()
@@ -53,6 +55,12 @@ class PostController extends Controller
         $post = Post::withTrashed()->find(1);
         $post->restore();
         dd('restored');
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('post.index');
     }
 
     // firstOrCreate
